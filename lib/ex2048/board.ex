@@ -19,33 +19,21 @@ defmodule Ex2048.Board do
   end
 
   def right(board) do
-    Ex2048.Moves.Right.go(board)
+    board
+    |> Ex2048.Moves.Right.go
     |> randomly_place_tile
   end
 
   def left(board) do
-    Ex2048.Moves.Left.go(board)
+    board
+    |> Ex2048.Moves.Left.go
     |> randomly_place_tile
   end
 
   def print(board) do
     board
-    |> Enum.chunk(4)
-    |> print_lines
+    |> Ex2048.Renderer.render
   end
-
-  def print_lines([]), do: nil
-  def print_lines([line|tail]) do
-    line
-    |> Enum.map(&printable/1)
-    |> Enum.join(" ")
-    |> IO.puts
-
-    print_lines tail
-  end
-
-  defp printable(nil), do: "_" |> tile
-  defp printable(a), do: a |> to_string |> tile
 
   defp make_empty_board, do: 1..16 |> Enum.map(fn _ -> nil end)
 
@@ -69,11 +57,5 @@ defmodule Ex2048.Board do
 
   defp set_or_choose_again({pos, true}, _), do: pos
   defp set_or_choose_again({_, false}, board), do: select_free_tile(board)
-
-  def tile(value) do
-    value
-    |> to_string
-    |> String.rjust(4)
-  end
 
 end
