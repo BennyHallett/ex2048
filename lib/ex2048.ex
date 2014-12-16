@@ -1,6 +1,9 @@
 defmodule Ex2048 do
 
   def play do
+    :os.timestamp
+    |> :random.seed
+
     """
     Welcome to Ex2048.
 
