@@ -2,11 +2,11 @@ defmodule Ex2048.Moves.Up do
 
   def go(board) do
     board
-    |> translate
+    |> Ex2048.Translations.cols_to_rows
     |> Enum.chunk(4)
     |> Enum.map(&process_col/1)
     |> List.flatten
-    |> translate_back
+    |> Ex2048.Translations.rows_to_cols
   end
 
   def process_col(col) do
@@ -37,13 +37,5 @@ defmodule Ex2048.Moves.Up do
   defp combine(nils, head), do: [head|nils] |> List.flatten
 
   defp remove_nils(list), do: list |> Enum.filter(fn(i) -> i != nil end)
-
-  defp translate([a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p]) do
-    [a, e, i, m, b, f, j, n, c, g, k, o, d, h, l, p]
-  end
-
-  defp translate_back([a, e, i, m, b, f, j, n, c, g, k, o, d, h, l, p]) do
-    [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p]
-  end
 
 end
